@@ -83,10 +83,7 @@ Requirements:
  - Cython (<http://www.cython.org/>)
  - gcc
 
-Users of Mac OS 10.6 and above should be able to just type "make" in
-the root directory.  I have not had time to tune the Makefiles for
-other systems, so other users should try to make and be prepared for
-some debugging.
+Type "make" in the root directory.
 
 Credits
 -------
