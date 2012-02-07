@@ -29,7 +29,8 @@ all:
 
 clean:
 	$(MAKE) -C c-helpers clean
-	rm -f *~ *.o *.so
+	$(MAKE) -C LiE clean
+	rm -f *~ *.o *.so lie.c
 
 lie.o: lie.pyx
 	cython lie.pyx $(fixed-flags)
