@@ -4,17 +4,17 @@
 #endif
 
 static poly* thorough_copy(poly* p) /* does freepol(p) */
-{ index i,n=p->nrows; poly* result=private_pol(p); bigint** b;
+{ lie_Index i,n=p->nrows; poly* result=private_pol(p); bigint** b;
   for (i=0; i<n; i++) if (b= &result->coef[i],isshared(*b)>1)
     { clrshared(*b); *b=copybigint(*b,NULL); setshared(*b); }
   return result;
 }
 
 poly* Alt_dom(poly* p)
-{ index j,s=Ssrank(grp); /* keep out of torus */
+{ lie_Index j,s=Ssrank(grp); /* keep out of torus */
   if (!s) return p; p=thorough_copy(p);
   for (j=0; j<p->nrows; j++)
-  { register index i=0,n=0; entry* v=p->elm[j]; bigint* c=p->coef[j];
+  { register lie_Index i=0,n=0; entry* v=p->elm[j]; bigint* c=p->coef[j];
     while(true)
     { while (v[i]>=0) if (++i==s) goto finish_j; /* find negative entry */
       if (++v[i]==0) { c->size=0; break; } /* kill term, forget exponent */
@@ -37,9 +37,9 @@ poly* Alt_dom(poly* p)
    in if-else matching problems
 */
 
-static void simp_alt_refls(poly* p,index offset, index i,simpgrp* g)
+static void simp_alt_refls(poly* p,lie_Index offset, lie_Index i,simpgrp* g)
 { bigint** c=p->coef; entry** m=p->elm;
-  index n=p->nrows,j,k=offset+i,r=g->lierank; entry d,* v; bigint* b;
+  lie_Index n=p->nrows,j,k=offset+i,r=g->lierank; entry d,* v; bigint* b;
   for (j=0; j<n; j++) if (m[j][k]== -1)
   { swap_terms(m,c,j--,--n); clrshared(c[n]); } /* remove */
   p->nrows=n;
@@ -64,7 +64,7 @@ static void simp_alt_refls(poly* p,index offset, index i,simpgrp* g)
     else if (i==0) if (r==3) loop (	      v[1]+=d; v[2]+=d )
 		   else      loop (	      v[1]+=d	       )
     else if (i==r-3)	     loop ( v[-1]+=d; v[1]+=d; v[2]+=d )
-    else /* i==r-2 or i==r-1 */ { index j=r-3-i; loop ( v[j]+=d )}
+    else /* i==r-2 or i==r-1 */ { lie_Index j=r-3-i; loop ( v[j]+=d )}
   break; case 'E':
     if (i>3 && i<r-1) loop ( v[-1]+=d; v[1]+=d )
     else if (i==r-1)  loop ( v[-1]+=d;	       )
@@ -83,18 +83,18 @@ static void simp_alt_refls(poly* p,index offset, index i,simpgrp* g)
   Reduce_pol(p);
 }
 
-static void alt_refls(poly* p,index nr)
+static void alt_refls(poly* p,lie_Index nr)
 { if (type_of(grp)==SIMPGRP) simp_alt_refls(p,0,nr,&grp->s);
   else if (simpgroup(grp)) simp_alt_refls(p,0,nr,Liecomp(grp,0));
   else
-  { index i,d,offset=0;
+  { lie_Index i,d,offset=0;
     for (i=0; nr>=(d=Liecomp(grp,i)->lierank); i++) { offset+=d; nr-=d; }
     simp_alt_refls(p,offset,nr,Liecomp(grp,i));
   }
 }
 
 poly* Alt_dom_w(poly* p, vector* word)
-{ index i; entry* w=word->compon,wi; p=thorough_copy(p);
+{ lie_Index i; entry* w=word->compon,wi; p=thorough_copy(p);
   for (i=0; i<word->ncomp; i++) if((wi=w[i])!=0) alt_refls(p,wi-1);
   return p;
 }
@@ -104,15 +104,15 @@ poly* Alt_dom_w(poly* p, vector* word)
    the remaining positions lexicographically
 */
 
-static index maindex;
+static lie_Index maindex;
 
-static cmp_tp main_decr(entry* v, entry* w, index len)
+static cmp_tp main_decr(entry* v, entry* w, lie_Index len)
 { if (v[maindex]!=w[maindex]) return v[maindex]>w[maindex] ? 1 : -1;
   while (len-->0) if (*v++!= *w++) return *--v > *--w ? 1 : -1; return 0;
 }
 
-static poly* demaz(poly* p,index nr)
-{ index i,k=0,pos,r=p->ncols,upb_size=0; poly* result;
+static poly* demaz(poly* p,lie_Index nr)
+{ lie_Index i,k=0,pos,r=p->ncols,upb_size=0; poly* result;
   matrix* cart=Cartan(); entry* root=cart->elm[nr],* x=mkintarray(r); 
   cmpfn_tp sav_cmp=cmpfn; cmpfn=main_decr; maindex=nr;
   alt_refls(p,nr); /* start by trying to cancel */
@@ -138,7 +138,7 @@ static poly* demaz(poly* p,index nr)
 }
 
 poly* Demazure(poly* p, vector* word)
-{ index i;
+{ lie_Index i;
   for (i=0; i<word->ncomp; i++) p=demaz(thorough_copy(p),word->compon[i]-1);
   return p;
 }

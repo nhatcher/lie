@@ -1,37 +1,37 @@
 
 
-bigint* fac(index n);
+bigint* fac(lie_Index n);
 
-bigint* n_tableaux(entry* lambda, index l);
+bigint* n_tableaux(entry* lambda, lie_Index l);
 
-bigint* Classord(entry* kappa, index l);
+bigint* Classord(entry* kappa, lie_Index l);
 
-index check_part(entry* lambda, index l);
+lie_Index check_part(entry* lambda, lie_Index l);
 
 vector* check_tabl(vector* v);
 
-boolean Nextperm(entry* w, index n);
+boolean Nextperm(entry* w, lie_Index n);
 
-boolean Nextpart(entry* lambda, index l);
+boolean Nextpart(entry* lambda, lie_Index l);
 
-boolean Nexttableau(entry* t, index n);
+boolean Nexttableau(entry* t, lie_Index n);
 
-matrix* Permutations(entry* v,index n);
+matrix* Permutations(entry* v,lie_Index n);
 
-matrix* Partitions(index n);
+matrix* Partitions(lie_Index n);
 
-matrix* Tableaux(entry* lambda, index l);
+matrix* Tableaux(entry* lambda, lie_Index l);
 
-vector* Trans_part(entry* lambda, index l);
+vector* Trans_part(entry* lambda, lie_Index l);
 
-entry Sign_part(entry* lambda, index l);
+entry Sign_part(entry* lambda, lie_Index l);
 
-void Robinson_Schensted (entry* P, entry* Q, index n, entry* sigma);
+void Robinson_Schensted (entry* P, entry* Q, lie_Index n, entry* sigma);
 
-void Schensted_Robinson (entry* sigma, index n, entry* P, entry* Q);
+void Schensted_Robinson (entry* sigma, lie_Index n, entry* P, entry* Q);
 
-poly* MN_char(entry* lambda, index l);
+poly* MN_char(entry* lambda, lie_Index l);
 
-bigint* MN_char_val(entry* lambda, entry* mu, index l, index m);
+bigint* MN_char_val(entry* lambda, entry* mu, lie_Index l, lie_Index m);
 
 
