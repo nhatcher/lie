@@ -12,11 +12,11 @@ cdef extern from "lie-py.h":
 
     # from lie.h
 
-    ctypedef long index
+    ctypedef long lie_Index
     ctypedef long entry
     ctypedef int boolean
     ctypedef int cmp_tp
-    ctypedef cmp_tp (*cmpfn_tp) (entry*,entry*,index)
+    ctypedef cmp_tp (*cmpfn_tp) (entry*,entry*,lie_Index)
     ctypedef char* string
     
     # memtype.h
@@ -27,15 +27,15 @@ cdef extern from "lie-py.h":
     ctypedef struct bigint:
         pass
     ctypedef struct vector:
-        index ncomp
+        lie_Index ncomp
         entry *compon
     ctypedef struct matrix:
-        index nrows
-        index ncols
+        lie_Index nrows
+        lie_Index ncols
         entry **elm
     ctypedef struct poly:
-        index nrows
-        index ncols
+        lie_Index nrows
+        lie_Index ncols
         entry **elm
         bigint **coef
         
@@ -43,7 +43,7 @@ cdef extern from "lie-py.h":
         pass
     ctypedef simpgrp_struct simpgrp
     ctypedef struct group:
-        index ncomp, toraldim
+        lie_Index ncomp, toraldim
         simpgrp **liecomp
     ctypedef struct tekst:
         char *string
@@ -75,10 +75,10 @@ cdef extern from "lie-py.h":
 
     # mem.h
     void **ptr
-    group* mkgroup(index ncomp)
-    vector* mkvector(index n)
-    matrix* mkmatrix(index r, index c)
-    poly* mkpoly(index r,index c)
+    group* mkgroup(lie_Index ncomp)
+    vector* mkvector(lie_Index n)
+    matrix* mkmatrix(lie_Index r, lie_Index c)
+    poly* mkpoly(lie_Index r,lie_Index c)
     # actually macros
     void setshared(lieobj x)
     void clrshared(lieobj x)
@@ -100,38 +100,38 @@ cdef extern from "lie-py.h":
     # init.h
     intcel* bool_false
     intcel* bool_true
-    poly* poly_null(index r)
+    poly* poly_null(lie_Index r)
     void init()
 
     # grpdata.h
     boolean simpgroup(lieobj g)
     vector* Simproot_norms(lieobj grp)
-    index Lierank(lieobj grp)
+    lie_Index Lierank(lieobj grp)
     vector* Exponents(lieobj grp)
-    index Numproots(lieobj grp)
+    lie_Index Numproots(lieobj grp)
     
     entry Dimgrp(lieobj grp)
     matrix* Center(lieobj grp)
     
-    #index find_root(entry* alpha, entry level, simpgrp* g)
+    #lie_Index find_root(entry* alpha, entry level, simpgrp* g)
     
     # symg.h
-    bigint* n_tableaux(entry* lam, index l)
-    bigint* Classord(entry* kappa, index l)
-    index check_part(entry* lam, index l)
+    bigint* n_tableaux(entry* lam, lie_Index l)
+    bigint* Classord(entry* kappa, lie_Index l)
+    lie_Index check_part(entry* lam, lie_Index l)
     vector* check_tabl(vector* v)
-    boolean Nextperm(entry* w, index n)
-    boolean Nextpart(entry* lam, index l)
-    boolean Nexttableau(entry* t, index n)
-    matrix* Permutations(entry* v,index n)
-    matrix* Partitions(index n)
-    matrix* Tableaux(entry* lam, index l)
-    vector* Trans_part(entry* lam, index l)
-    entry Sign_part(entry* lam, index l)
-    void Robinson_Schensted (entry* P, entry* Q, index n, entry* sigma)
-    void Schensted_Robinson (entry* sigma, index n, entry* P, entry* Q)
-    poly* MN_char(entry* lam, index l)
-    bigint* MN_char_val(entry* lam, entry* mu, index l, index m)
+    boolean Nextperm(entry* w, lie_Index n)
+    boolean Nextpart(entry* lam, lie_Index l)
+    boolean Nexttableau(entry* t, lie_Index n)
+    matrix* Permutations(entry* v,lie_Index n)
+    matrix* Partitions(lie_Index n)
+    matrix* Tableaux(entry* lam, lie_Index l)
+    vector* Trans_part(entry* lam, lie_Index l)
+    entry Sign_part(entry* lam, lie_Index l)
+    void Robinson_Schensted (entry* P, entry* Q, lie_Index n, entry* sigma)
+    void Schensted_Robinson (entry* sigma, lie_Index n, entry* P, entry* Q)
+    poly* MN_char(entry* lam, lie_Index l)
+    bigint* MN_char_val(entry* lam, entry* mu, lie_Index l, lie_Index m)
     
     # weylloop.h
     void Weylloopinit(simpgrp* g)
@@ -160,10 +160,10 @@ cdef extern from "lie-py.h":
     lieobj Diagram(lieobj grp)
     
     # /* box/matrix.c */
-    void copyrow(entry* v,entry* w,index n) # /* ubiquitous, as are following: */
-    #void addrow(entry* v,entry* w,entry* x,index n)
-    #void subrow(entry* v,entry* w,entry* x,index n)
-    #boolean pos_subrow(entry* v,entry* w,entry* x,index n)
+    void copyrow(entry* v,entry* w,lie_Index n) # /* ubiquitous, as are following: */
+    #void addrow(entry* v,entry* w,entry* x,lie_Index n)
+    #void subrow(entry* v,entry* w,entry* x,lie_Index n)
+    #boolean pos_subrow(entry* v,entry* w,entry* x,lie_Index n)
     matrix* extendmat(matrix* old)
     matrix* copymatrix(matrix* old)
     
@@ -198,7 +198,7 @@ cdef extern from "lie-py.h":
     poly* pol_mul_pol_mat(poly *a, matrix *b)
     matrix* mat_append_mat_mat(matrix* a, matrix* b)
     matrix* mat_transpose_mat(matrix *a) # /* replace with Transpose? */
-    index int_mul_vec_vec(vector *a, vector *b)
+    lie_Index int_mul_vec_vec(vector *a, vector *b)
     lieobj mat_sub_mat_int(lieobj a, entry obj_k)
     vector *vec_dif_vec_vec(vector *a, vector *b)
     matrix* mat_sub_mat_mat(matrix *a, matrix *b)
@@ -214,10 +214,10 @@ cdef extern from "lie-py.h":
     lieobj int_ne_vec_vec(lieobj a, lieobj b)
     lieobj vec_startaddelm_int_vec(entry a, lieobj b)
     lieobj vec_subelm_vec_int(lieobj a, entry b)
-    lieobj vec_select_mat_int(lieobj m, entry indexobj)
-    lieobj vec_select_pol_int(poly *m, entry indexobj)
+    lieobj vec_select_mat_int(lieobj m, entry lie_Indexobj)
+    lieobj vec_select_pol_int(poly *m, entry lie_Indexobj)
     lieobj bin_select_pol_vec(poly *p, vector *v)
-    lieobj Int_search_mat_vec(matrix* m, vector* v, index low, index up)
+    lieobj Int_search_mat_vec(matrix* m, vector* v, lie_Index low, lie_Index up)
     lieobj int_search_mat_vec(matrix *m, vector *v)
     lieobj int_search_mat_vec_int_int(matrix *m, vector *v, entry up, entry low)
     lieobj int_select_mat_int_int(matrix *m, entry n1, entry n2)
@@ -229,7 +229,7 @@ cdef extern from "lie-py.h":
     matrix* mat_polynom_pol(poly *p)
     lieobj pol_polynom_bin_vec(bigint *d, vector *v)
     lieobj pol_polynom_vec(vector *v)
-    lieobj pol_min_pol(poly	*a)
+    lieobj pol_min_pol(poly *a)
     lieobj pol_atensor_pol_pol(lieobj p1, lieobj p2)
 
     lieobj tex_maxsub_grp(group *g)
@@ -241,14 +241,14 @@ cdef extern from "lie-py.h":
     # from c-helpers/static3.c
 
     # /* Group operations */
-    void check_wt(vector* lam, index r)
-    void check_wts(matrix* m, index r)
-    void check_rt(vector* rt, index s)
-    void check_rts(matrix* m, index s)
-    void check_toral(vector* t, index r, index lim)
-    void check_torals(matrix* m, index r)
-    void check_Ww(vector* ww, index s)
-    void check_Wws(matrix* m, index s)
+    void check_wt(vector* lam, lie_Index r)
+    void check_wts(matrix* m, lie_Index r)
+    void check_rt(vector* rt, lie_Index s)
+    void check_rts(matrix* m, lie_Index s)
+    void check_toral(vector* t, lie_Index r, lie_Index lim)
+    void check_torals(matrix* m, lie_Index r)
+    void check_Ww(vector* ww, lie_Index s)
+    void check_Wws(matrix* m, lie_Index s)
     lieobj grp_mul_grp_grp(lieobj g1, lieobj g2)
     lieobj grp_select_grp_int(lieobj g, entry n)
     lieobj vec_sort_vec(lieobj v)
@@ -262,7 +262,7 @@ cdef extern from "lie-py.h":
     lieobj int_dim_grp(lieobj g)
     lieobj vid_diagram_grp(lieobj g)
     lieobj vec_liecode_grp(lieobj g)
-    lieobj groupmake(char lietype,index rank)
+    lieobj groupmake(char lietype,lie_Index rank)
     lieobj grp_liegroup_int_int(entry typ, entry rank)
     # /*lieobj int_ncomp_grp(group* g)*/
     lieobj int_lierank_grp(lieobj g)
@@ -452,7 +452,7 @@ cdef class grp:
             n = len(self)
             m = 1 if self.toral_dim() == 0 else 0
             i,_,_ = slice(key, None).indices(n)
-            if abs(i) >= n: raise IndexError(u"grp index out of range")
+            if abs(i) >= n: raise IndexError(u"grp lie_Index out of range")
             return grp_from_lieobj(grp_select_grp_int(self.g, (i+1) % (n+m)))
     def to_list(self): return [self[i] for i in range(len(self))]
     def __iter__(self): return iter(self.to_list())
@@ -486,6 +486,9 @@ cdef class grp:
     def inv_cartan(self):  return mat_from_lieobj(mat_icartan_grp(self.g))
     def longword(self): return vec_from_lieobj(vec_longword_grp(self.g))
     def max_subgrps(self):
+        print 'Hola'
+        tex_maxsub_grp(<group*>self.g)
+        print 'Hi'
         s = str_from_lieobj(tex_maxsub_grp(<group*>self.g))
         return [grp(x.decode(u"utf-8")) for x in s.split(',')]
     def max_subgrp(self, i): return self.max_subgrps()[i]
@@ -575,7 +578,7 @@ cdef class vec:
             return vec([self.v.compon[k] for k in range(i, j)])
         else:
             i,_,_ = slice(key, None).indices(len(self))
-            if i >= len(self): raise IndexError(u"vec index out of range")
+            if i >= len(self): raise IndexError(u"vec lie_Index out of range")
             return self.v.compon[int(i)]
     def __setitem__(vec self, int key, val):
         cdef vector* oldv
@@ -587,7 +590,7 @@ cdef class vec:
         self.v.compon[key] = int(val)
     def __delitem__(vec self, int i):
         cdef vector* oldv = self.v
-        self.v = <vector*>vec_subelm_vec_int(<lieobj>oldv, i + 1) # LiE doesn't use zero-indexing
+        self.v = <vector*>vec_subelm_vec_int(<lieobj>oldv, i + 1) # LiE doesn't use zero-lie_Indexing
         neglect(<lieobj>oldv)
         protect(<lieobj>self.v)
     def __repr__(self):
@@ -669,7 +672,7 @@ cdef class mat:
     def __delitem__(self, i):
         cdef matrix* oldm = self.m
         neglect(<lieobj>oldm)
-        self.m = <matrix*>mat_sub_mat_int(<lieobj>oldm, i + 1) # LiE doesn't use zero-indexing
+        self.m = <matrix*>mat_sub_mat_int(<lieobj>oldm, i + 1) # LiE doesn't use zero-lie_Indexing
         protect(<lieobj>self.m)
     # def __setitem__(self, i, val):
     # no __setitem__ for matrices, since for example cartan matrices are
@@ -836,9 +839,9 @@ cdef class pol:
             return [self[k] for k in range(i, j)]
         else:
             i,_,_ = slice(key, None).indices(len(self))
-            if i >= len(self): raise IndexError(u"poly index out of range.")
+            if i >= len(self): raise IndexError(u"poly lie_Index out of range.")
             return bigint2pyint(self.p.coef[int(i)]), \
-                   vec_from_lieobj(vec_select_pol_int(self.p, i+1)) # LiE uses 1-indexing
+                   vec_from_lieobj(vec_select_pol_int(self.p, i+1)) # LiE uses 1-lie_Indexing
 
     def __repr__(self):
         return u" + ".join([repr(c) + u"X" + repr(v) for c, v in self])
@@ -1160,7 +1163,7 @@ class rep:
     A sum of reps is a direct sum, multiplication of r by an integer n
     is an n-fold direct sum of copies of r, etc.
     
-    rep objects r can be indexed:
+    rep objects r can be lie_Indexed:
 
     r[k] is (m, irr), where irr is the k'th irreducible representation
     appearing in r, and m is its multiplicity.  rep(r[:], r.grp) == r
@@ -1245,7 +1248,7 @@ class rep:
         return lieobj2pyint(bin_tensor_pol_pol_vec_grp( \
             (<pol>self.hw_pol).p, (<pol>other.hw_pol).p, (<vec>v).v, (<grp>self.grp).g))
         
-    def dynkin_index(self):
+    def dynkin_lie_Index(self):
         g = self.grp
         return sum([n*i.dim()*(i.hw() * (i.hw()+2*g.rho())) for n,i in self])/(2*g.dim())
     def prod(self, other):
@@ -1529,4 +1532,3 @@ init() # allocate the object table, among other things
 [C2, C3, C4, C5, C6, C7, C8, C9]         = [grp(3,n) for n in range(2,10)]
 [D3, D4, D5, D6, D7, D8, D9]             = [grp(4,n) for n in range(3,10)]
 [E6, E7, E8, F4, G2] = [grp(u'E6'), grp(u'E7'), grp(u'E8'), grp(u'F4'), grp(u'G2')]
-

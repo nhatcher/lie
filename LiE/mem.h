@@ -48,7 +48,7 @@ void freem(void* addr);
 
 void freep(poly* addr);
 
-entry* mkintarray(index n);
+entry* mkintarray(lie_Index n);
 
 intcel* (mkintcel)(entry n  with_line_and_file);
 bigint *(mkbigint)(long size  with_line_and_file);
@@ -56,22 +56,22 @@ bigint *(mkbigint)(long size  with_line_and_file);
 bigint* copybigint(bigint* from, bigint* to);
 bigint* extendbigint(bigint* old);
 
-vector* (mkvector)(index n  with_line_and_file);
+vector* (mkvector)(lie_Index n  with_line_and_file);
 vector* copyvector(vector *src);
 
-matrix* (mkmatrix)(index r,index c  with_line_and_file);
-poly* (mkpoly)(index r,index c  with_line_and_file);
+matrix* (mkmatrix)(lie_Index r,lie_Index c  with_line_and_file);
+poly* (mkpoly)(lie_Index r,lie_Index c  with_line_and_file);
 
 matrix* copymatrix(matrix* old);
 poly* copypoly(poly* old);
 matrix* extendmat(matrix* old);
 poly* extendpoly(poly* old);
 
-simpgrp* (mksimpgrp)(char type, index rank  with_line_and_file);
+simpgrp* (mksimpgrp)(char type, lie_Index rank  with_line_and_file);
 
-group* (mkgroup)(index ncomp  with_line_and_file);
+group* (mkgroup)(lie_Index ncomp  with_line_and_file);
 
-tekst* (mktekst)(index n  with_line_and_file);
+tekst* (mktekst)(lie_Index n  with_line_and_file);
 
 tekst* copytekst(tekst* o);
 

@@ -1,9 +1,10 @@
-
+#ifndef LIE_H
+#define LIE_H
 
 typedef int boolean;
 typedef char* string;
 typedef long entry; /* see also |MaxEntry| and |MinEntry| */
-typedef long index;
+typedef long lie_Index;
 typedef short Short;
 #ifndef Py_LONGINTREPR_H
 typedef unsigned short digit; /* see also |MaxDigit| */
@@ -28,7 +29,7 @@ typedef struct { strtype name; objtype type;} nametype;
 typedef struct { strtype p[N_PARENTS]; short n; } par_tp;
 
 typedef int cmp_tp;
-typedef cmp_tp (*cmpfn_tp) (entry*,entry*,index);
+typedef cmp_tp (*cmpfn_tp) (entry*,entry*,lie_Index);
 
 
 #include  <setjmp.h>
@@ -168,7 +169,7 @@ extern strtype fun_name;
 
 extern int line; /* line number needed for error messages */
 
-extern index nrefl;
+extern lie_Index nrefl;
 
 extern boolean alloc_gc;
   /* whether to use |allocmem| rather than |mlalloc| in |creatsym| */
@@ -189,3 +190,4 @@ int no_terminal(FILE* f);
 /* <lie-py> */
 void gc_print_obj(object obj);
 /* </lie-py> */
+#endif

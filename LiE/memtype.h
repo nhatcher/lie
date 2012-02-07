@@ -37,8 +37,8 @@ typedef struct
   
   objtype type; reftype nref;
 
-  index ncomp;
-  index size;
+  lie_Index ncomp;
+  lie_Index size;
   entry *compon;
 } vector;
 
@@ -47,8 +47,8 @@ typedef struct
   
   objtype type; reftype nref;
 
-  index nrows, ncols;
-  index rowsize;
+  lie_Index nrows, ncols;
+  lie_Index rowsize;
   entry **elm;
   bigint **null;
 } matrix;
@@ -58,8 +58,8 @@ typedef struct
   
   objtype type; reftype nref;
 
-  index nrows, ncols;
-  index rowsize;
+  lie_Index nrows, ncols;
+  lie_Index rowsize;
   entry **elm;
   bigint **coef;
 } poly;
@@ -82,7 +82,7 @@ typedef struct
   
   objtype type; reftype nref;
 
-  index ncomp, toraldim;
+  lie_Index ncomp, toraldim;
   simpgrp **liecomp;
 } group;
 
@@ -91,7 +91,7 @@ typedef struct
   
   objtype type; reftype nref;
 
-  index len;
+  lie_Index len;
   char *string;
 } tekst;
 
